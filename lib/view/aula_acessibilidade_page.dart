@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 
+import '../viewmodel/aula_acessibilidade_view_model.dart';
+
 // =============================================================================
-// AULA — ACESSIBILIDADE
+// AULA — ACESSIBILIDADE (View em MVVM)
 // =============================================================================
 // Aqui vocês vão ver uma página de perfil feita com foco em
 // acessibilidade: contraste de cores (4,5:1), Semantics para leitores de tela
 // e uma estrutura que ajuda quem usa tecnologias assistivas. Leiam os
 // comentários junto com o código — foi pensado pra vocês acompanharem na aula.
+// O ViewModel (mostrarRaioX, callback) vem do app; a View só monta a UI.
 // =============================================================================
 
 class AulaAcessibilidadePage extends StatelessWidget {
   const AulaAcessibilidadePage({
     super.key,
-    required this.mostrarRaioX,
-    required this.aoAlternarRaioX,
+    required this.viewModel,
   });
 
-  final bool mostrarRaioX;
-  final ValueChanged<bool> aoAlternarRaioX;
+  final AulaAcessibilidadeViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
+    final mostrarRaioX = viewModel.mostrarRaioX;
+    final aoAlternarRaioX = viewModel.aoAlternarRaioX;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Aula — Acessibilidade'),
@@ -85,9 +89,9 @@ class AulaAcessibilidadePage extends StatelessWidget {
               child: Text(
                 'Maria Silva',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: Colors.grey.shade900,
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: Colors.grey.shade900,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
             ),
 
@@ -103,8 +107,8 @@ class AulaAcessibilidadePage extends StatelessWidget {
             Text(
               'maria.silva@email.com',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.grey.shade700,
-              ),
+                    color: Colors.grey.shade700,
+                  ),
             ),
 
             const SizedBox(height: 32),
@@ -242,9 +246,9 @@ class AulaAcessibilidadePage extends StatelessWidget {
             Text(
               'O bloco acima tem contraste ruim de propósito. Nos seus apps, usem cores que passem no teste 4,5:1 (ex.: WebAIM Contrast Checker).',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey.shade700,
-                fontStyle: FontStyle.italic,
-              ),
+                    color: Colors.grey.shade700,
+                    fontStyle: FontStyle.italic,
+                  ),
               textAlign: TextAlign.center,
             ),
           ],

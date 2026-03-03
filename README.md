@@ -55,14 +55,17 @@ Ao abrir o app, a primeira tela é o **Menu de Aulas**. Toque em um item para ab
 
 ---
 
-## Estrutura do projeto (resumo)
+## Estrutura do projeto (MVVM)
 
-| Arquivo / pasta | Descrição |
-|----------------|-----------|
-| `lib/main.dart` | Ponto de entrada e **menu** com os botões que levam a cada aula. |
-| `lib/aula1.dart` | Aula 1 — Contador (revisão Flutter/Dart). |
-| `lib/aula_acessibilidade.dart` | Aula — Acessibilidade (contraste 4,5:1, Semantics, Raio-X). |
-| *(novas aulas)* | Cada aula nova vira um arquivo `lib/aula_*.dart` e um item no menu em `main.dart`. |
+O projeto segue **MVVM** com pastas didáticas dentro de `lib/`: **view/** (telas), **viewmodel/** (estado e lógica), **model/** (dados/entidades, por enquanto vazia).
+
+| Pasta / arquivo | Descrição |
+|-----------------|-----------|
+| `lib/main.dart` | Ponto de entrada do app. |
+| `lib/view/` | **Views** — telas (UI): `app_view.dart`, `menu_page.dart`, `aula1_contador_page.dart`, `aula_acessibilidade_page.dart`. |
+| `lib/viewmodel/` | **ViewModels** — estado e lógica: `app_view_model.dart`, `aula1_contador_view_model.dart`, `aula_acessibilidade_view_model.dart`. |
+| `lib/model/` | **Models** — entidades e dados (ex.: usuário, perfil). Por enquanto só tem um README explicando; usamos quando houver API/banco. |
+| *(novas aulas)* | Adicionar `*_page.dart` em `view/`, `*_view_model.dart` em `viewmodel/`, e um item no menu em `view/menu_page.dart`. |
 
 *(O nome do pacote no `pubspec.yaml` é `mobile2_aulas`.)*
 

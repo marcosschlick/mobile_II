@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../viewmodel/aula1_contador_view_model.dart';
+
 // =============================================================================
-// AULA 1 — CONTADOR (revisão Flutter/Dart)
+// AULA 1 — CONTADOR (View em MVVM)
 // =============================================================================
-// Este arquivo contém a tela do contador que usamos na primeira aula.
-// É aberta pelo menu principal (main.dart) quando o usuário toca em "Aula 1".
-// Os comentários abaixo são os mesmos da versão didática do contador.
+// Esta tela é a View do contador: ela só exibe o valor e repassa os toques
+// pro ViewModel. O estado (counter) e a lógica (increment, decrement, etc.)
+// estão no Aula1ContadorViewModel. A View escuta o ViewModel e reconstrói
+// quando ele chama notifyListeners().
 // =============================================================================
 
-// Tela da Aula 1: StatefulWidget com estado (contador)
 class Aula1ContadorPage extends StatefulWidget {
   const Aula1ContadorPage({super.key});
 
@@ -17,34 +19,25 @@ class Aula1ContadorPage extends StatefulWidget {
 }
 
 class _Aula1ContadorPageState extends State<Aula1ContadorPage> {
-  int _counter = 0;
+  final Aula1ContadorViewModel _viewModel = Aula1ContadorViewModel();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
-
-  void _multiplyCounter() {
-    setState(() {
-      _counter *= 2;
-    });
-  }
-
-  void _divideCounter() {
-    setState(() {
-      _counter ~/= 2;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _viewModel.addListener(_onViewModelChanged);
   }
 
   @override
+  void dispose() {
+    _viewModel.removeListener(_onViewModelChanged);
+    super.dispose();
+  }
+
+  void _onViewModelChanged() => setState(() {});
+
+  @override
   Widget build(BuildContext context) {
+    final counter = _viewModel.counter;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -56,10 +49,10 @@ class _Aula1ContadorPageState extends State<Aula1ContadorPage> {
           children: [
             const Text('Você pressionou o botão este número de vezes:'),
             Text(
-              '$_counter',
+              '$counter',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: _counter < 0 ? Colors.red : Colors.blue,
-              ),
+                    color: counter < 0 ? Colors.red : Colors.blue,
+                  ),
             ),
           ],
         ),
@@ -71,13 +64,13 @@ class _Aula1ContadorPageState extends State<Aula1ContadorPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               FloatingActionButton(
-                onPressed: _incrementCounter,
+                onPressed: _viewModel.increment,
                 tooltip: 'Increment',
                 child: const Icon(Icons.add),
               ),
               const SizedBox(height: 10),
               FloatingActionButton(
-                onPressed: _decrementCounter,
+                onPressed: _viewModel.decrement,
                 tooltip: 'Decrement',
                 backgroundColor: Colors.red[100],
                 child: const Icon(Icons.remove, color: Colors.red),
@@ -89,7 +82,7 @@ class _Aula1ContadorPageState extends State<Aula1ContadorPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               FloatingActionButton(
-                onPressed: _multiplyCounter,
+                onPressed: _viewModel.multiply,
                 tooltip: 'Multiply',
                 backgroundColor: Colors.green[100],
                 child: const Icon(
@@ -99,7 +92,7 @@ class _Aula1ContadorPageState extends State<Aula1ContadorPage> {
               ),
               const SizedBox(height: 10),
               FloatingActionButton(
-                onPressed: _divideCounter,
+                onPressed: _viewModel.divide,
                 tooltip: 'Divide',
                 backgroundColor: Colors.yellow[100],
                 child: const Icon(
