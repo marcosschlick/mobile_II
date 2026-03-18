@@ -13,22 +13,22 @@ class Aula1ContadorViewModel extends ChangeNotifier {
 
   int get counter => _counter;
 
-  void increment() {
+  void incrementCounter() {
     _counter++;
     notifyListeners();
   }
 
-  void decrement() {
+  void decrementCounter() {
     _counter--;
     notifyListeners();
   }
 
-  void multiply() {
+  void multiplyCounter() {
     _counter *= 2;
     notifyListeners();
   }
 
-  void divide() {
+  void divideCounter() {
     _counter ~/= 2;
     notifyListeners();
   }

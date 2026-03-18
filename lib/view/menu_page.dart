@@ -55,7 +55,7 @@ class MenuPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         children: [
           ListTile(
-            title: const Text('Aula 1 — Contador'),
+            title: const Text('Contador de cliques'),
             subtitle: const Text(
               'Revisão Flutter: StatefulWidget, setState, layout',
             ),

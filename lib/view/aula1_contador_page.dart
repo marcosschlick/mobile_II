@@ -41,18 +41,19 @@ class _Aula1ContadorPageState extends State<Aula1ContadorPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Aula 1 — Contador'),
+        title: const Text('Contador de cliques'),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: .center,
           children: [
-            const Text('Você pressionou o botão este número de vezes:'),
+            const Text('Contagem atual:'),
             Text(
               '$counter',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: counter < 0 ? Colors.red : Colors.blue,
-                  ),
+                color: counter < 0 ? Colors.red : Colors.blue,
+              ),
             ),
           ],
         ),
@@ -65,14 +66,15 @@ class _Aula1ContadorPageState extends State<Aula1ContadorPage> {
             children: [
               FloatingActionButton(
                 heroTag: 'increment',
-                onPressed: _viewModel.increment,
+                onPressed: _viewModel.incrementCounter,
                 tooltip: 'Increment',
-                child: const Icon(Icons.add),
+                backgroundColor: Colors.green[100],
+                child: const Icon(Icons.add, color: Colors.green),
               ),
               const SizedBox(height: 10),
               FloatingActionButton(
                 heroTag: 'decrement',
-                onPressed: _viewModel.decrement,
+                onPressed: _viewModel.decrementCounter,
                 tooltip: 'Decrement',
                 backgroundColor: Colors.red[100],
                 child: const Icon(Icons.remove, color: Colors.red),
@@ -85,24 +87,18 @@ class _Aula1ContadorPageState extends State<Aula1ContadorPage> {
             children: [
               FloatingActionButton(
                 heroTag: 'multiply',
-                onPressed: _viewModel.multiply,
+                onPressed: _viewModel.multiplyCounter,
                 tooltip: 'Multiply',
-                backgroundColor: Colors.green[100],
-                child: const Icon(
-                  Icons.dynamic_feed_sharp,
-                  color: Colors.green,
-                ),
+                backgroundColor: Colors.blue[100],
+                child: const Icon(Icons.close, color: Colors.blue),
               ),
               const SizedBox(height: 10),
               FloatingActionButton(
                 heroTag: 'divide',
-                onPressed: _viewModel.divide,
+                onPressed: _viewModel.divideCounter,
                 tooltip: 'Divide',
-                backgroundColor: Colors.yellow[100],
-                child: const Icon(
-                  Icons.do_disturb_off_outlined,
-                  color: Colors.yellow,
-                ),
+                backgroundColor: Colors.orange[100],
+                child: const Icon(Icons.percent, color: Colors.orange),
               ),
             ],
           ),
