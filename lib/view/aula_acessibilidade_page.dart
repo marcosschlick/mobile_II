@@ -24,7 +24,7 @@ class AulaAcessibilidadePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Aula — Acessibilidade'),
+        title: const Text('Acessibilidade'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           // Controle do Raio-X no AppBar: assim ele não some quando o debug
@@ -105,7 +105,7 @@ class AulaAcessibilidadePage extends StatelessWidget {
               'maria.silva@email.com',
               style: Theme.of(
                 context,
-              ).textTheme.bodyLarge?.copyWith(color: Colors.grey.shade700),
+              ).textTheme.bodyLarge?.copyWith(color: Colors.grey.shade900),
             ),
 
             const SizedBox(height: 32),
@@ -216,14 +216,14 @@ class AulaAcessibilidadePage extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.warning_amber_rounded,
-                      color: Colors.amber.shade700,
+                      color: const Color.fromARGB(255, 0, 0, 0),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         'Evite texto amarelo claro em fundo claro: contraste < 4,5:1.',
                         style: TextStyle(
-                          color: Colors.amber.shade200,
+                          color: const Color.fromARGB(255, 0, 0, 0),
                           fontSize: 14,
                         ),
                       ),

@@ -65,7 +65,7 @@ class MenuPage extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            title: const Text('Aula — Acessibilidade'),
+            title: const Text('Acessibilidade'),
             subtitle: const Text('Contraste 4,5:1, Semantics, Raio-X'),
             leading: const CircleAvatar(child: Icon(Icons.accessibility_new)),
             onTap: () => _abrirAula(
