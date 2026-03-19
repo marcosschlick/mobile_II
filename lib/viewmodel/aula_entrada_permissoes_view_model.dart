@@ -2,13 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
+// TODO: adicionar os imports abaixo quando for implementar as permissões
+// import 'package:geolocator/geolocator.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 // =============================================================================
-// AULA ENTRADA E PERMISSÕES — VIEW MODEL (MVVM) — VERSÃO RESOLVIDA
+// AULA ENTRADA E PERMISSÕES — VIEW MODEL (MVVM) — VERSÃO EXERCÍCIO
 // =============================================================================
-// Esta é a versão completa usada pelo professor. A versão que os alunos recebem
-// em aula (aula_entrada_permissoes_view_model.dart) esconde a lógica principal
-// e marca pontos com // TODO para serem implementados.
+// Guarda os controllers do formulário (entrada) e o status das permissões.
+// Nesta versão, escondemos a lógica principal e marcamos pontos com // TODO
+// para vocês implementarem em aula.
 // =============================================================================
 
 class AulaEntradaPermissoesViewModel extends ChangeNotifier {
@@ -37,34 +40,57 @@ class AulaEntradaPermissoesViewModel extends ChangeNotifier {
   bool get cameraLoading => _cameraLoading;
 
   Future<void> requestCamera() async {
+    // TODO: implementar fluxo de permissão de CÂMERA usando permission_handler.
+    // Dica de passos:
+    // 1. Marcar _cameraLoading como true e chamar notifyListeners().
+    // 2. Usar Permission.camera.status pra ver o estado atual.
+    // 3. Se ainda não estiver concedido, chamar Permission.camera.request().
+    // 4. Atualizar _cameraStatus com base no resultado (Concedido/Negado/etc.).
+    // 5. Marcar _cameraLoading como false e chamar notifyListeners().
+    //
+    // Por enquanto deixamos um texto fixo pra tela não quebrar.
     _cameraLoading = true;
-    _cameraStatus = 'Verificando...';
     notifyListeners();
 
     try {
-      final status = await Permission.camera.status;
+      var status = await Permission.camera.status;
+      if (status.isDenied) {
+        status = await Permission.camera.request();
+      }
       if (status.isGranted) {
         _cameraStatus = 'Concedido';
-      } else if (status.isDenied) {
-        final result = await Permission.camera.request();
-        _cameraStatus = result.isGranted ? 'Concedido' : 'Negado';
+      } else if (status.isPermanentlyDenied) {
+        _cameraStatus = 'Negado (permanentemente)';
       } else {
-        _cameraStatus = 'Negado (permanente ou indisponível)';
+        _cameraStatus = 'Negado';
       }
     } catch (e) {
       _cameraStatus = 'Erro: $e';
+    } finally {
+      _cameraLoading = false;
+      notifyListeners();
     }
-
-    _cameraLoading = false;
-    notifyListeners();
   }
 
   Future<void> requestLocation() async {
+    // TODO: implementar fluxo de permissão de LOCALIZAÇÃO usando geolocator.
+    // Dica de passos:
+    // 1. Marcar _locationLoading como true e chamar notifyListeners().
+    // 2. Verificar se o serviço de localização está ligado com
+    //    Geolocator.isLocationServiceEnabled().
+    // 3. Checar/perguntar permissão com Geolocator.checkPermission() e
+    //    Geolocator.requestPermission().
+    // 4. Se permitido, chamar Geolocator.getCurrentPosition() e montar uma
+    //    string com latitude/longitude (use toStringAsFixed(4)).
+    // 5. Atualizar _locationStatus com a mensagem adequada (ou erro).
+    // 6. Marcar _locationLoading como false e chamar notifyListeners().
+    //
+    // Aqui também deixamos um texto fixo só pra app continuar rodando.
     _locationLoading = true;
-    _locationStatus = 'Solicitando...';
     notifyListeners();
 
     try {
+      // Verifica se o serviço de localização está ligado
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         _locationStatus = 'Serviço de localização desligado';
@@ -73,26 +99,28 @@ class AulaEntradaPermissoesViewModel extends ChangeNotifier {
         return;
       }
 
+      // Verifica permissão
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
       }
 
-      if (permission == LocationPermission.deniedForever) {
-        _locationStatus = 'Negado (sempre)';
-      } else if (permission == LocationPermission.denied) {
-        _locationStatus = 'Negado';
+      if (permission == LocationPermission.denied) {
+        _locationStatus = 'Permissão negada';
+      } else if (permission == LocationPermission.deniedForever) {
+        _locationStatus = 'Permissão negada (sempre)';
       } else {
-        final pos = await Geolocator.getCurrentPosition();
+        // Permissão concedida – obtém a posição
+        Position pos = await Geolocator.getCurrentPosition();
         _locationStatus =
-            'Concedido — ${pos.latitude.toStringAsFixed(4)}, ${pos.longitude.toStringAsFixed(4)}';
+            'Concedido: ${pos.latitude.toStringAsFixed(4)}, ${pos.longitude.toStringAsFixed(4)}';
       }
     } catch (e) {
       _locationStatus = 'Erro: $e';
+    } finally {
+      _locationLoading = false;
+      notifyListeners();
     }
-
-    _locationLoading = false;
-    notifyListeners();
   }
 
   @override
@@ -103,4 +131,3 @@ class AulaEntradaPermissoesViewModel extends ChangeNotifier {
     super.dispose();
   }
 }
-

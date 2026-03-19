@@ -81,7 +81,7 @@ class MenuPage extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            title: const Text('Aula — Entrada e Permissões'),
+            title: const Text('Entrada e Permissões'),
             subtitle: const Text('Permissões de câmera e localização'),
             leading: const CircleAvatar(child: Icon(Icons.camera_alt)),
             onTap: () => _abrirAula(
