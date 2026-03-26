@@ -26,8 +26,12 @@ class _AulaMapasGeolocalizacaoPageState
   final AulaMapasGeolocalizacaoViewModel _viewModel =
       AulaMapasGeolocalizacaoViewModel();
   final MapController _mapController = MapController();
-  final TextEditingController _destinoLatController = TextEditingController(text: '-23.5489');
-  final TextEditingController _destinoLngController = TextEditingController(text: '-46.6388');
+  final TextEditingController _destinoLatController = TextEditingController(
+    text: '-23.5489',
+  );
+  final TextEditingController _destinoLngController = TextEditingController(
+    text: '-46.6388',
+  );
 
   @override
   void initState() {
@@ -73,7 +77,8 @@ class _AulaMapasGeolocalizacaoPageState
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              initialCenter: AulaMapasGeolocalizacaoViewModel.centroInicialPadrao,
+              initialCenter:
+                  AulaMapasGeolocalizacaoViewModel.centroInicialPadrao,
               initialZoom: 12,
             ),
             children: [
@@ -94,8 +99,8 @@ class _AulaMapasGeolocalizacaoPageState
                       width: 48,
                       height: 48,
                       child: Icon(
-                        Icons.location_on,
-                        color: Colors.red.shade700,
+                        Icons.person_pin_circle,
+                        color: Colors.green.shade700,
                         size: 48,
                       ),
                     ),
@@ -109,7 +114,7 @@ class _AulaMapasGeolocalizacaoPageState
                   polylines: [
                     Polyline(
                       points: pontosRota,
-                      color: Colors.blue,
+                      color: Colors.purple,
                       strokeWidth: 4,
                     ),
                   ],
@@ -134,8 +139,8 @@ class _AulaMapasGeolocalizacaoPageState
                     Text(
                       'Rota até',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -153,7 +158,9 @@ class _AulaMapasGeolocalizacaoPageState
                               border: OutlineInputBorder(),
                               isDense: true,
                             ),
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -165,7 +172,9 @@ class _AulaMapasGeolocalizacaoPageState
                               border: OutlineInputBorder(),
                               isDense: true,
                             ),
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true,
+                            ),
                           ),
                         ),
                       ],
@@ -175,9 +184,8 @@ class _AulaMapasGeolocalizacaoPageState
                         padding: const EdgeInsets.only(top: 8),
                         child: Text(
                           rotaErro,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Colors.red.shade700,
-                              ),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: Colors.red.shade700),
                         ),
                       ),
                     const SizedBox(height: 8),
@@ -191,10 +199,17 @@ class _AulaMapasGeolocalizacaoPageState
                                 // (parse _destinoLatController e _destinoLngController). Chamar
                                 // _viewModel.buscarRota(origem, destino). Opcional: centralizar
                                 // o mapa na rota (fitCamera ou move para o centro da rota).
-                                final lat = double.tryParse(_destinoLatController.text);
-                                final lng = double.tryParse(_destinoLngController.text);
+                                final lat = double.tryParse(
+                                  _destinoLatController.text,
+                                );
+                                final lng = double.tryParse(
+                                  _destinoLngController.text,
+                                );
                                 if (lat == null || lng == null) return;
-                                final origem = posicao ?? AulaMapasGeolocalizacaoViewModel.centroInicialPadrao;
+                                final origem =
+                                    posicao ??
+                                    AulaMapasGeolocalizacaoViewModel
+                                        .centroInicialPadrao;
                                 final destino = LatLng(lat, lng);
                                 await _viewModel.buscarRota(origem, destino);
                                 if (_viewModel.pontosRota.isNotEmpty) {
@@ -205,7 +220,9 @@ class _AulaMapasGeolocalizacaoPageState
                             ? const SizedBox(
                                 width: 18,
                                 height: 18,
-                                child: CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
                               )
                             : const Icon(Icons.route),
                         label: Text(rotaLoading ? 'Buscando...' : 'Rota até'),
@@ -262,9 +279,7 @@ class _AulaMapasGeolocalizacaoPageState
                         if (erro != null)
                           Text(
                             erro,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
+                            style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(color: Colors.red.shade700),
                           )
                         else if (posicao != null)

@@ -92,7 +92,7 @@ class MenuPage extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            title: const Text('Aula 1.5 — Mapas e geolocalização'),
+            title: const Text('Mapas e geolocalização'),
             subtitle: const Text(
               'Flutter Web: mapa OSM, geolocator, marcador na posição',
             ),
